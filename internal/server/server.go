@@ -3,13 +3,13 @@ package server
 import (
 	"context"
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
 
 	"github.com/gouravk3/ntt-golang-coding-test/config"
-	"github.com/gouravk3/ntt-golang-coding-test/internal/router"
 )
 
 type server struct {
@@ -17,16 +17,12 @@ type server struct {
 	httpServer *http.Server
 }
 
-func New(config *config.Config) *server {
-	ginEngine, err := router.InitRouter(config)
-	if err != nil {
-		panic(err)
-	}
+func New(config *config.Config, handler http.Handler) *server {
 
 	// decoupling handler
 	srv := &http.Server{
 		Addr:    fmt.Sprintf("%v:%v", config.Server.Host, config.Server.Port),
-		Handler: ginEngine.Handler(),
+		Handler: handler,
 	}
 
 	return &server{
@@ -37,7 +33,7 @@ func New(config *config.Config) *server {
 
 func (s *server) run() {
 	if err := s.httpServer.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-		panic(err)
+		log.Fatalf("failed to serve http server: %v", err)
 	}
 }
 

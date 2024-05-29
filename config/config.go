@@ -1,6 +1,7 @@
 package config
 
 import (
+	"flag"
 	"fmt"
 
 	"github.com/spf13/viper"
@@ -14,9 +15,9 @@ type AppConfig interface {
 
 // Config of application
 type Config struct {
-	Server      ServerConfig    `mapstructure:",squash"`
-	Logger      LoggerConfig    `mapstructure:",squash"`
-	Database    DatabaseConfig  `mapstructure:",squash"`
+	Server   ServerConfig   `mapstructure:",squash"`
+	Logger   LoggerConfig   `mapstructure:",squash"`
+	Database DatabaseConfig `mapstructure:",squash"`
 }
 
 // ServerConfig Server config
@@ -40,9 +41,9 @@ type LoggerConfig struct {
 
 // DatabaseConfig Postgres config
 type DatabaseConfig struct {
-	Dbname     string         `mapstructure:"DB_NAME"`
-	Username   string         `mapstructure:"DB_USER"`
-	Password   string         `mapstructure:"DB_PASSWORD"`
+	Dbname   string `mapstructure:"DB_NAME"`
+	Username string `mapstructure:"DB_USER"`
+	Password string `mapstructure:"DB_PASSWORD"`
 }
 
 func (c *Config) GetServerConfig() *ServerConfig {
@@ -58,10 +59,12 @@ func (c *Config) GetDatabaseConfig() *DatabaseConfig {
 }
 
 // Init initialize configuration
-func Init(configFile string) (*Config, error) {
+func Init() (*Config, error) {
+	configFilePath := flag.String("configPath", "config/config.yaml", "app configurations")
+	flag.Parse()
 	var configuration Config
 	viper.AutomaticEnv()
-	viper.SetConfigFile(configFile)
+	viper.SetConfigFile(*configFilePath)
 
 	if err := viper.ReadInConfig(); err != nil {
 		return nil, fmt.Errorf("error reading config file, %w", err)
