@@ -1,17 +1,18 @@
 package store
 
 import (
+	"fmt"
 	"sync"
 )
 
 type Exoplanet struct {
-	ID          string `json:"id"`
-	Name        string `json:"name"`
-	Description string `json:"description"`
-	Distance    string `json:"distance"`
-	Radius      string `json:"radius"`
-	Mass        string `json:"mass,omitempty"`
-	Type        string `json:"type"`
+	ID          string  `json:"id"`
+	Name        string  `json:"name"`
+	Description string  `json:"description"`
+	Distance    int     `json:"distance"`
+	Radius      float64 `json:"radius"`
+	Mass        float64 `json:"mass,omitempty"`
+	Type        string  `json:"type"`
 }
 
 type StorageType struct {
@@ -23,22 +24,17 @@ type StorageType struct {
 func Init() *StorageType {
 	return &StorageType{
 		exoplanets: make(map[string]Exoplanet),
-		idCounter:  1,
+		idCounter:  0,
 	}
-}
-
-func (s *StorageType) NextID() int {
-	s.Lock()
-	defer s.Unlock()
-	id := s.idCounter
-	s.idCounter++
-	return id
 }
 
 func (s *StorageType) AddExoplanet(exoplanet Exoplanet) {
 	s.Lock()
 	defer s.Unlock()
-	s.exoplanets[exoplanet.ID] = exoplanet
+	s.idCounter++
+	id := fmt.Sprint(s.idCounter)
+	exoplanet.ID = id
+	s.exoplanets[id] = exoplanet
 }
 
 func (s *StorageType) ListExoplanets() []Exoplanet {

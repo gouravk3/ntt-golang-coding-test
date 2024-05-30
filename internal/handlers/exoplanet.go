@@ -98,3 +98,21 @@ func (h *handlers) DeleteExoplanet(c *gin.Context) {
 		"Message": "exoplent with was deleted",
 	})
 }
+
+// func (h *handlers) FuelEstimation(c *gin.Context) {
+// 	crew := c.Query("crewcount")
+// 	planetid := c.Query("planetid")
+
+// 	exoplanet, found := h.exoplanetService.GetExoplanetByID(planetid)
+// 	if !found {
+// 		c.JSON(http.StatusNotFound, gin.H{
+// 			"Error": fmt.Sprintf("id: %v, was not found in db", planetid),
+// 		})
+
+// 		return
+// 	}
+	
+
+// }
+
+

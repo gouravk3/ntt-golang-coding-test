@@ -17,7 +17,7 @@ func ExoplanetRouter(appConfig config.AppConfig) (*gin.Engine, error) {
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
 
-	h :=handlers.New()
+	h := handlers.New()
 
 	apiGroup := r.Group("/exoplanets/api/v1")
 	healthRouter(apiGroup)
@@ -38,10 +38,11 @@ func FuelEstimationRouter(appConfig config.AppConfig) (*gin.Engine, error) {
 
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
+	handler := handlers.NewfuelEstimatorHandler()
 
 	apiGroup := r.Group("/fuelestimation/api/v1")
 	healthRouter(apiGroup)
-	apiGroup.POST("/fuelestimation", handlers.FuelEstimation)
+	apiGroup.GET("/fuelestimation", handler.FuelEstimation)
 
 	return r, nil
 }
