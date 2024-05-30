@@ -9,7 +9,7 @@ import (
 	"github.com/gouravk3/ntt-golang-coding-test/internal/server"
 )
 
-var configFilePath = flag.String("configPath", "/home/gourav.prasad_win@npci.org.in/Downloads/ntt-golang-coding-test/config/config.fuelestimation.yaml", "app configurations")
+var configFilePath = flag.String("configPath", "config/config.fuelestimation.yaml", "app configurations")
 
 func main() {
 	flag.Parse()

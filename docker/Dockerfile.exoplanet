@@ -1,0 +1,19 @@
+FROM golang:1.22-alpine as build
+
+ENV GO111MODULE=on \
+    CGO_ENABLED=0
+
+WORKDIR /service
+COPY . .
+
+RUN go build -o exoplanet ./cmd/exoplanet/main.go
+
+FROM alpine:3.17
+
+WORKDIR /service
+COPY --from=build /service/exoplanet .
+COPY --from=build /service/config/config.exoplanet.yaml ./config/config.exoplanet.yaml
+
+EXPOSE 3003
+
+CMD ["./exoplanet"]

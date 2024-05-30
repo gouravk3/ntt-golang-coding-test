@@ -1,0 +1,15 @@
+FROM golang:1.22-alpine as build 
+ENV GO111MODULE=on
+ENV CGO_ENABLED=0
+COPY . /service
+WORKDIR /service
+RUN go build -o fuelestimation cmd/fuelestimation/main.go
+
+FROM alpine:3.17
+WORKDIR /service
+COPY --from=build /service/fuelestimation .
+COPY --from=build /service/config/config.fuelestimation.yaml ./config/config.fuelestimation.yaml
+
+EXPOSE 6000
+
+CMD [ "./fuelestimation" ]
