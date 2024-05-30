@@ -6,10 +6,21 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/gouravk3/ntt-golang-coding-test/internal/service"
 	"github.com/gouravk3/ntt-golang-coding-test/internal/store"
 )
 
-func AddExoplanet(c *gin.Context) {
+type handlers struct {
+	exoplanetService *service.ExoplanetService
+}
+
+func New() *handlers {
+	return &handlers{
+		exoplanetService: service.NewExoplanetService(),
+	}
+}
+
+func (h *handlers) AddExoplanet(c *gin.Context) {
 	var exoplanet store.Exoplanet
 	err := c.ShouldBindBodyWithJSON(&exoplanet)
 	if err != nil {
@@ -19,28 +30,71 @@ func AddExoplanet(c *gin.Context) {
 		})
 		return
 	}
-	// TODO: add to in-memo db
+	h.exoplanetService.AddExoplanet(exoplanet)
 
-	c.JSON(http.StatusCreated, exoplanet)
+	c.JSON(http.StatusCreated, gin.H{
+		"Added entry": exoplanet,
+	})
 }
 
-func ListExoplanets(c *gin.Context) {
-	// TODO: iterate in-memo db and construct a json
-
-	// c.JSON(http.StatusOK, jsonObjext)
-	fmt.Println("ListExoplanets")
-
+func (h *handlers) ListExoplanets(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{
+		"List of Exoplanets": h.exoplanetService.ListExoplanets(),
+	})
 }
 
-func GetExoplanetByID(c *gin.Context) {
-	fmt.Println("GetExoplanetByID")
+func (h *handlers) GetExoplanetByID(c *gin.Context) {
+	id := c.Query("id")
+	exoplanet, found := h.exoplanetService.GetExoplanetByID(id)
+	if !found {
+		c.JSON(http.StatusNotFound, gin.H{
+			"Error": fmt.Sprintf("id: %v, was not found in db", id),
+		})
 
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"Exoplanet": exoplanet,
+	})
 }
 
-func UpdateExoplanet(c *gin.Context) {
+func (h *handlers) UpdateExoplanet(c *gin.Context) {
+	var exoplanet store.Exoplanet
+	err := c.ShouldBindBodyWithJSON(&exoplanet)
+	if err != nil {
+		log.Println("error while binding json: ", err)
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+	updated := h.exoplanetService.UpdateExoplanet(exoplanet)
+	if !updated {
+		c.JSON(http.StatusNotFound, gin.H{
+			"Error": "exoplanet not found in db",
+		})
 
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"Exoplanet": exoplanet,
+	})
 }
 
-func DeleteExoplanet(c *gin.Context) {
+func (h *handlers) DeleteExoplanet(c *gin.Context) {
+	id := c.Query("id")
+	deleted := h.exoplanetService.DeleteExoplanet(id)
+	if !deleted {
+		c.JSON(http.StatusNotFound, gin.H{
+			"Error": fmt.Sprintf("id: %v, was not found in db", id),
+		})
 
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"Message": "exoplent with was deleted",
+	})
 }

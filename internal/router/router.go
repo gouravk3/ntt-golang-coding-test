@@ -17,15 +17,17 @@ func ExoplanetRouter(appConfig config.AppConfig) (*gin.Engine, error) {
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
 
+	h :=handlers.New()
+
 	apiGroup := r.Group("/exoplanets/api/v1")
 	healthRouter(apiGroup)
 	exoplanetGroup := apiGroup.Group("/exoplanets")
 	{
-		exoplanetGroup.POST("", handlers.AddExoplanet)
-		exoplanetGroup.GET("", handlers.ListExoplanets)
-		exoplanetGroup.GET("/:id", handlers.GetExoplanetByID)
-		exoplanetGroup.PUT("/:id", handlers.UpdateExoplanet)
-		exoplanetGroup.DELETE("/:id", handlers.DeleteExoplanet)
+		exoplanetGroup.POST("", h.AddExoplanet)
+		exoplanetGroup.GET("", h.ListExoplanets)
+		exoplanetGroup.GET("/getexoplanet", h.GetExoplanetByID)
+		exoplanetGroup.PUT("/updateexoplanet", h.UpdateExoplanet)
+		exoplanetGroup.DELETE("/deleteexoplanet", h.DeleteExoplanet)
 	}
 
 	return r, nil

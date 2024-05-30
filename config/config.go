@@ -47,7 +47,7 @@ func (c *Config) GetLoggerConfig() *LoggerConfig {
 
 // Init initialize configuration
 func Init() (*Config, error) {
-	configFilePath := flag.String("configPath", "config/config.yaml", "app configurations")
+	configFilePath := flag.String("configPath", "config/config.exoplanet.yaml", "app configurations")
 	flag.Parse()
 	var configuration Config
 	viper.AutomaticEnv()
