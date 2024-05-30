@@ -2,6 +2,7 @@ version: '3.8'
 
 services:
   exoplanet:
+    container_name: exoplanet-service
     build:
       context: .
       dockerfile: Dockerfile.exoplanet
@@ -11,6 +12,7 @@ services:
       - exoplanet-network
 
   fuelestimation:
+    container_name: fuelestimation-service
     build:
       context: .
       dockerfile: Dockerfile.fuelestimation

@@ -4,4 +4,4 @@ GIN_RELEASE_MODE: "debug"
 APP_HOST: "0.0.0.0"
 APP_PORT: "6000"
 
-BASE_URL_EXOPLANETSERVICE: "http://localhost:3003/exoplanets/api/v1"
+BASE_URL_EXOPLANETSERVICE: "http://exoplanet-service:3003/exoplanets/api/v1"

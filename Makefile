@@ -1,6 +1,6 @@
 .PHONY: all build run stop clean
 
-DOCKER_COMPOSE_FILE=docker-compose.yml
+DOCKER_COMPOSE_FILE=docker-compose.yaml
 
 all: build
 
