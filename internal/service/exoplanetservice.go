@@ -1,8 +1,6 @@
 package service
 
 import (
-	"sync"
-
 	"github.com/gouravk3/ntt-golang-coding-test/internal/store"
 )
 
@@ -11,9 +9,7 @@ type ExoplanetService struct {
 }
 
 func NewExoplanetService() *ExoplanetService {
-	store := &store.StorageType{
-		Mutex: sync.Mutex{},
-	}
+	store := store.Init()
 
 	return &ExoplanetService{
 		Store: store,

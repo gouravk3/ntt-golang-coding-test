@@ -20,9 +20,11 @@ type StorageType struct {
 	idCounter  int
 }
 
-var Storage = StorageType{
-	exoplanets: make(map[string]Exoplanet),
-	idCounter:  1,
+func Init() *StorageType {
+	return &StorageType{
+		exoplanets: make(map[string]Exoplanet),
+		idCounter:  1,
+	}
 }
 
 func (s *StorageType) NextID() int {
