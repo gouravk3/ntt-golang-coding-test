@@ -10,14 +10,12 @@ import (
 type AppConfig interface {
 	GetServerConfig() *ServerConfig
 	GetLoggerConfig() *LoggerConfig
-	GetDatabaseConfig() *DatabaseConfig
 }
 
 // Config of application
 type Config struct {
 	Server   ServerConfig   `mapstructure:",squash"`
 	Logger   LoggerConfig   `mapstructure:",squash"`
-	Database DatabaseConfig `mapstructure:",squash"`
 }
 
 // ServerConfig Server config
@@ -39,23 +37,12 @@ type LoggerConfig struct {
 	Level string `mapstructure:"LOG_LEVEL"`
 }
 
-// DatabaseConfig Postgres config
-type DatabaseConfig struct {
-	Dbname   string `mapstructure:"DB_NAME"`
-	Username string `mapstructure:"DB_USER"`
-	Password string `mapstructure:"DB_PASSWORD"`
-}
-
 func (c *Config) GetServerConfig() *ServerConfig {
 	return &c.Server
 }
 
 func (c *Config) GetLoggerConfig() *LoggerConfig {
 	return &c.Logger
-}
-
-func (c *Config) GetDatabaseConfig() *DatabaseConfig {
-	return &c.Database
 }
 
 // Init initialize configuration

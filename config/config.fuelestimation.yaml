@@ -1,0 +1,7 @@
+SERVICE_NAME: "fuelestimation-microservice"
+GIN_RELEASE_MODE: "debug"
+
+APP_HOST: "0.0.0.0"
+APP_PORT: "6000"
+
+LOG_LEVEL: "debug"

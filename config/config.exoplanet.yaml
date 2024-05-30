@@ -1,0 +1,10 @@
+SERVICE_NAME: "exoplanet-microservice"
+GIN_RELEASE_MODE: "debug"
+
+APP_HOST: "0.0.0.0"
+APP_PORT: "3000"
+
+LOG_LEVEL: "debug"
+
+SERVICE:
+  EXTERNAL_SERVICE_ENDPOINT: "0.0.0.0:6000"

@@ -6,11 +6,11 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/gouravk3/ntt-golang-coding-test/internal/service"
+	"github.com/gouravk3/ntt-golang-coding-test/internal/store"
 )
 
 func AddExoplanet(c *gin.Context) {
-	var exoplanet service.Exoplanet
+	var exoplanet store.Exoplanet
 	err := c.ShouldBindBodyWithJSON(&exoplanet)
 	if err != nil {
 		log.Println("error while binding json: ", err)

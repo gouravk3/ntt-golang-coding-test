@@ -1,6 +1,6 @@
 module github.com/gouravk3/ntt-golang-coding-test
 
-go 1.22.3
+go 1.22
 
 require (
 	github.com/gin-gonic/gin v1.10.0

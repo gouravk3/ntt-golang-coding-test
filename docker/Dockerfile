@@ -1,15 +1,15 @@
-FROM golang:1.22
+FROM golang:1.19-alpine as build 
+ENV GO111MODULE=on
+ENV CGO_ENABLED=0
+COPY . /service
+WORKDIR /service
+go build -o exoplanet cmd/exoplanet/main.go
+go build -o fuelestimation cmd/fuelestimation/main.go
 
-WORKDIR /app
+FROM alpine:3.17
+WORKDIR /service
+COPY --from=build /service/exoplanet .
+COPY --from=build /service/fuelestimation .
 
-COPY go.mod .
-COPY go.sum .
-RUN go mod download
+CMD [ "./exoplanet", "./fuelestimation" ]
 
-COPY . .
-
-RUN go build -o main .
-
-EXPOSE 8000
-
-CMD ["./main"]
