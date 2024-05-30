@@ -13,7 +13,6 @@ func NewFuelEstimatorService() *fuelEstimatorService {
 	return &fuelEstimatorService{}
 }
 func (fs *fuelEstimatorService) CalculateEstimatedFuel(crewCapacity int, planet store.Exoplanet) float64 {
-	// Calculate gravity
 	var gravity float64
 	if planet.Type == "GasGiant" {
 		gravity = 0.5 / (planet.Radius * planet.Radius)
@@ -21,9 +20,7 @@ func (fs *fuelEstimatorService) CalculateEstimatedFuel(crewCapacity int, planet 
 		gravity = planet.Mass / (planet.Radius * planet.Radius)
 	}
 
-	// Calculate fuel estimation
-
 	fuelEstimation := (float64(planet.Distance) / (gravity * gravity)) * float64(crewCapacity)
-	return fuelEstimation
 
+	return fuelEstimation
 }

@@ -17,8 +17,9 @@ type fuelEstimatorHandlers struct {
 	config               config.AppConfig
 }
 
-func NewfuelEstimatorHandler() *fuelEstimatorHandlers {
+func NewfuelEstimatorHandler(config config.AppConfig) *fuelEstimatorHandlers {
 	return &fuelEstimatorHandlers{
+		config:               config,
 		fuelEstimatorService: service.NewFuelEstimatorService(),
 	}
 }

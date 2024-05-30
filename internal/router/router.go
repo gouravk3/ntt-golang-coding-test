@@ -38,7 +38,7 @@ func FuelEstimationRouter(appConfig config.AppConfig) (*gin.Engine, error) {
 
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
-	handler := handlers.NewfuelEstimatorHandler()
+	handler := handlers.NewfuelEstimatorHandler(appConfig)
 
 	apiGroup := r.Group("/fuelestimation/api/v1")
 	healthRouter(apiGroup)
