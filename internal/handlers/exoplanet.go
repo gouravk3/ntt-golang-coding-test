@@ -54,9 +54,7 @@ func (h *handlers) GetExoplanetByID(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{
-		"Exoplanet": exoplanet,
-	})
+	c.JSON(http.StatusOK, exoplanet)
 }
 
 func (h *handlers) UpdateExoplanet(c *gin.Context) {
@@ -98,21 +96,3 @@ func (h *handlers) DeleteExoplanet(c *gin.Context) {
 		"Message": "exoplent with was deleted",
 	})
 }
-
-// func (h *handlers) FuelEstimation(c *gin.Context) {
-// 	crew := c.Query("crewcount")
-// 	planetid := c.Query("planetid")
-
-// 	exoplanet, found := h.exoplanetService.GetExoplanetByID(planetid)
-// 	if !found {
-// 		c.JSON(http.StatusNotFound, gin.H{
-// 			"Error": fmt.Sprintf("id: %v, was not found in db", planetid),
-// 		})
-
-// 		return
-// 	}
-	
-
-// }
-
-

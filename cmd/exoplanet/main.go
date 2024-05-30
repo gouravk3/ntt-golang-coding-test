@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"log"
 
 	"github.com/gouravk3/ntt-golang-coding-test/config"
@@ -8,8 +9,12 @@ import (
 	"github.com/gouravk3/ntt-golang-coding-test/internal/server"
 )
 
+var configFilePath = flag.String("configPath", "config/config.exoplanet.yaml", "app configurations")
+
 func main() {
-	appConfig, err := config.Init()
+	flag.Parse()
+
+	appConfig, err := config.Init(configFilePath)
 	if err != nil {
 		log.Fatalf("failed to initialize config: %v", err)
 	}

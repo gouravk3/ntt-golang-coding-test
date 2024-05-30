@@ -1,7 +1,6 @@
 package config
 
 import (
-	"flag"
 	"fmt"
 
 	"github.com/spf13/viper"
@@ -9,46 +8,31 @@ import (
 
 type AppConfig interface {
 	GetServerConfig() *ServerConfig
-	GetLoggerConfig() *LoggerConfig
 }
 
 // Config of application
 type Config struct {
-	Server   ServerConfig   `mapstructure:",squash"`
-	Logger   LoggerConfig   `mapstructure:",squash"`
+	Server ServerConfig `mapstructure:",squash"`
 }
 
 // ServerConfig Server config
 type ServerConfig struct {
-	ServiceName    string `mapstructure:"SERVICE_NAME"`
-	Environment    string `mapstructure:"DD_ENV"`
-	Host           string `mapstructure:"APP_HOST"`
-	Port           string `mapstructure:"APP_PORT"`
-	Version        string `mapstructure:"APP_VERSION"`
-	GinReleaseMode string `mapstructure:"GIN_RELEASE_MODE"`
-}
-
-type Service struct {
-	ExternalService string `mapstructure:"EXTERNAL_SERVICE_ENDPOINT"`
-}
-
-// LoggerConfig Logger config
-type LoggerConfig struct {
-	Level string `mapstructure:"LOG_LEVEL"`
+	ServiceName      string `mapstructure:"SERVICE_NAME"`
+	Environment      string `mapstructure:"DD_ENV"`
+	Host             string `mapstructure:"APP_HOST"`
+	Port             string `mapstructure:"APP_PORT"`
+	Version          string `mapstructure:"APP_VERSION"`
+	GinReleaseMode   string `mapstructure:"GIN_RELEASE_MODE"`
+	BaseURLExoplanet string `mapstructure:"BASE_URL_EXOPLANETSERVICE"`
 }
 
 func (c *Config) GetServerConfig() *ServerConfig {
 	return &c.Server
 }
 
-func (c *Config) GetLoggerConfig() *LoggerConfig {
-	return &c.Logger
-}
-
 // Init initialize configuration
-func Init() (*Config, error) {
-	configFilePath := flag.String("configPath", "config/config.exoplanet.yaml", "app configurations")
-	flag.Parse()
+func Init(configFilePath *string) (*Config, error) {
+
 	var configuration Config
 	viper.AutomaticEnv()
 	viper.SetConfigFile(*configFilePath)

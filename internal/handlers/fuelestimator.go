@@ -39,7 +39,7 @@ func (h *fuelEstimatorHandlers) FuelEstimation(c *gin.Context) {
 	}
 
 	httpClient := http.DefaultClient
-	url := fmt.Sprintf("http://localhost:3003/exoplanets/api/v1/exoplanets/getexoplanet?id=%s", planetid)
+	url := fmt.Sprintf("%v/exoplanets/getexoplanet?id=%s", h.config.GetServerConfig().BaseURLExoplanet, planetid)
 	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create request", "details": err.Error()})
