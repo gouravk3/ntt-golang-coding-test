@@ -53,34 +53,88 @@
     "type": "Terrestrial"
   }
   ```
+- **CURL**:
+```bash
+$ curl --location 'localhost:3003/exoplanets/api/v1/exoplanets' \
+--header 'Content-Type: application/json' \
+--data '{
+  "name": "AaaaKepler-22b",
+  "description": "A possible super-Earth exoplanet.",
+  "distance": 1,
+  "radius": 3.4,
+  "mass": 2.0,
+  "type": "GasGiant"
+}'
+```
 
 ### List Exoplanets
 
 - **URL**: `/exoplanets/api/v1/exoplanets`
 - **Method**: `GET`
+- **CURL**:
+```bash
+$ curl --location 'localhost:3003/exoplanets/api/v1/exoplanets'
+```
 
 ### Get Exoplanet by ID
 
 - **URL**: `/exoplanets/api/v1/exoplanets/getexoplanet?id=1`
 - **Method**: `GET`
+- **CURL**:
+```bash
+$ curl --location 'localhost:3003/exoplanets/api/v1/exoplanets/getexoplanet?id=3'
+```
 
 ### Update Exoplanet
 
 - **URL**: `/exoplanets/api/v1/exoplanets/updateexoplanet`
 - **Method**: `PUT`
-- **Data**: Updated exoplanet details (same format as add exoplanet).
+- **Data**: 
+  ```json
+  {
+    "id": "1",
+    "name": "Kepler-22b",
+    "description": "A possible super-Earth exoplanet.",
+    "distance": 6,
+    "radius": 5.4,
+    "mass": 5.0,
+    "type": "Terrestrial"
+  }
+  ```
+- **CURL**:
+```bash
+$ curl --location --request PUT 'localhost:3003/exoplanets/api/v1/exoplanets/updateexoplanet' \
+--header 'Content-Type: application/json' \
+--data '{
+  "id": "1",
+  "name": "Kepler-22b",
+  "description": "A possible super-Earth exoplanet.",
+  "distance": 6,
+  "radius": 5.4,
+  "mass": 5.0,
+  "type": "GasGiant"
+}'
+```
 
 ### Delete Exoplanet
 
 - **URL**: `/exoplanets/api/v1/exoplanets/deleteexoplanet?id=1`
 - **Method**: `DELETE`
+- **CURL**:
+```bash
+$ curl --location --request DELETE 'localhost:3003/exoplanets/api/v1/exoplanets/deleteexoplanet?id=1'
+```
 
 ## API Endpoints - Fuelestimation Mircoservice
 
 ### Fuel Estimation
 
-- **URL**: `/exoplanets/{id}/fuel/{crew}`
+- **URL**: `/fuelestimation/api/v1/fuelestimation?crewcount=50&planetid=2`
 - **Method**: `GET`
+- **CURL**:
+```bash
+$ curl --location 'localhost:6000/fuelestimation/api/v1/fuelestimation?crewcount=50&planetid=1'
+```
 
 ## Fuel Calculation
 
