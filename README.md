@@ -1,4 +1,4 @@
-# ntt-golang-coding-test
+# Space Voyager
 
 ## Types of Exoplanets
 
